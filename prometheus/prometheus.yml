@@ -24,8 +24,13 @@ scrape_configs:
     static_configs:
       - targets: ["renderer:8081"]
 
-  - job_name: "minio"
+  - job_name: "minio_cluster"
     metrics_path: "/minio/v2/metrics/cluster"
+    static_configs:
+      - targets: ["s3:9000"]
+
+  - job_name: "minio_node"
+    metrics_path: "/minio/v2/metrics/node"
     static_configs:
       - targets: ["s3:9000"]
 

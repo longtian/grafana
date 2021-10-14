@@ -71,10 +71,11 @@ services:
 
   mc:
     image: "minio/mc:RELEASE.2021-10-07T04-19-58Z"
-    restart: "no"
     entrypoint: /entrypoint.sh
     depends_on:
       - s3
+    environment:
+      MC_HOST_s3: http://minioadmin:minioadmin@s3:9000
     volumes:
       - ./mc/entrypoint.sh:/entrypoint.sh
 

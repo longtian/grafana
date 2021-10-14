@@ -51,3 +51,17 @@ docker-compose logs -f webhook
 4. image is uploaded to s3 bucket by grafana 
 5. image url is included in notification payload
 6. notification sent to webhook address
+
+### cheatsheets
+
+**reload prometheus configuration**
+
+```
+curl -X POST http://127.0.0.1:9090/-/reload
+```
+
+**get a mc shell**
+
+```
+ docker-compose run --rm --entrypoint /bin/bash mc
+```
