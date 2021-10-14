@@ -1,0 +1,117 @@
+version: "2"
+services:
+  grafana:
+    build:
+      context: grafana/build
+    environment:
+
+      # turn off login for test propose
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+
+      # get rid of all external connections
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_SECURITY_DISABLE_GRAVATAR: "true"
+
+      # postgres store
+      GF_DATABASE_TYPE: "postgres"
+      GF_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/grafana"
+
+      # renderer
+      GF_SEVER_DOMAIN: grafana
+      GF_RENDERING_SERVER_URL: http://renderer:8081/render
+      GF_RENDERING_CALLBACK_URL: http://grafana:3000/
+
+      # image storage
+      GF_EXTERNAL_IMAGE_STORAGE_PROVIDER: s3
+      GF_EXTERNAL_IMAGE_STORAGE_S3_ENDPOINT: http://s3:9000
+      GF_EXTERNAL_IMAGE_STORAGE_S3_BUCKET: grafana
+      GF_EXTERNAL_IMAGE_STORAGE_S3_REGION: cn
+      GF_EXTERNAL_IMAGE_STORAGE_S3_ACCESS_KEY: minioadmin
+      GF_EXTERNAL_IMAGE_STORAGE_S3_SECRET_KEY: minioadmin
+      GF_EXTERNAL_IMAGE_STORAGE_S3_PATH_STYLE_ACCESS: "true"
+
+      # logging
+      GF_LOG_LEVEL: info
+      GF_LOG_FILTERS: "context:critical,rendering:debug,alerting.notifier:debug,alerting.engine:debug"
+    volumes:
+      - "./grafana/provisioning:/etc/grafana/provisioning"
+    ports:
+      - 3000:3000
+
+  renderer:
+    image: grafana/grafana-image-renderer:3.2.1
+    environment:
+      TZ: "Asia/Shanghai"
+      ENABLE_METRICS: "true"
+      RENDERING_MODE: "clustered"
+
+      # logging
+      RENDERING_VERBOSE_LOGGING: "true"
+      RENDERING_DUMPIO: "true"
+      LOG_LEVEL: debug
+    ports:
+      - 8081:8081
+
+  s3:
+    image: "minio/minio:RELEASE.2021-10-08T23-58-24Z"
+    command: "server /data"
+    restart: "always"
+    environment:
+      MINIO_ROOT_USER: "minioadmin"
+      MINIO_ROOT_PASSWORD: "minioadmin"
+
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
+      MINIO_BROWSER: "off"
+    ports:
+      - 9000:9000
+    volumes:
+      - "s3:/data"
+
+  mc:
+    image: "minio/mc:RELEASE.2021-10-07T04-19-58Z"
+    restart: "no"
+    entrypoint: /entrypoint.sh
+    depends_on:
+      - s3
+    volumes:
+      - ./mc/entrypoint.sh:/entrypoint.sh
+
+  postgres:
+    image: postgres:9
+    environment:
+      POSTGRES_USER: postgres     # define credentials
+      POSTGRES_PASSWORD: postgres # define credentials
+      POSTGRES_DB: grafana       # define database
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  webhook:
+    build:
+      context: webhook
+
+  prometheus:
+    image: prom/prometheus:v2.30.3
+    command:
+      - --web.enable-lifecycle
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    volumes:
+      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./prometheus/rules:/etc/prometheus/rules"
+      - "prometheus:/prometheus"
+    ports:
+      - 9090:9090
+
+  alertmanager:
+    image: prom/alertmanager:v0.23.0
+    ports:
+      - 9093:9093
+
+volumes:
+  postgres:
+  s3:
+  prometheus:

@@ -1,0 +1,507 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 52,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.2.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "alertmanager_alerts",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "alertmanager",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "10s",
+        "frequency": "10s",
+        "handler": 1,
+        "name": "grafana alerts alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "grafana_alerting_active_alerts",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 0,
+          "visible": true
+        }
+      ],
+      "title": "grafana alerts",
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "minio_bucket_usage_object_total",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "minio objects",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 52,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.2.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "rate(grafana_image_renderer_service_http_request_duration_seconds_sum[1m]) /\nrate(grafana_image_renderer_service_http_request_duration_seconds_count[1m])",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "rendering duration",
+      "type": "timeseries"
+    },
+    {
+      "colors": [
+        "#299c46",
+        "#ED8128",
+        "#d44a3a",
+        "#4040a0"
+      ],
+      "datasource": null,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "nullPointMode": "connected",
+      "polystat": {
+        "animationSpeed": 2500,
+        "columnAutoSize": true,
+        "columns": "",
+        "defaultClickThrough": "",
+        "defaultClickThroughNewTab": false,
+        "defaultClickThroughSanitize": false,
+        "displayLimit": 100,
+        "ellipseCharacters": 18,
+        "ellipseEnabled": false,
+        "fontAutoColor": true,
+        "fontAutoScale": true,
+        "fontSize": 12,
+        "fontType": "Roboto",
+        "globalDecimals": 2,
+        "globalDisplayMode": "all",
+        "globalDisplayTextTriggeredEmpty": "OK",
+        "globalOperatorName": "current",
+        "globalThresholds": [
+          {
+            "$$hashKey": "object:85",
+            "color": "#FA6400",
+            "state": 0,
+            "value": 0
+          },
+          {
+            "$$hashKey": "object:92",
+            "color": "#299c46",
+            "state": 0,
+            "value": 1
+          }
+        ],
+        "globalUnitFormat": "short",
+        "gradientEnabled": true,
+        "hexagonSortByDirection": 1,
+        "hexagonSortByField": "name",
+        "maxMetrics": 0,
+        "polygonBorderColor": "rgb(0,0,0)",
+        "polygonBorderSize": 2,
+        "polygonGlobalFillColor": "rgb(10, 80, 161)",
+        "radius": "",
+        "radiusAutoSize": true,
+        "regexPattern": "",
+        "rowAutoSize": true,
+        "rows": "",
+        "shape": "hexagon_pointed_top",
+        "tooltipDisplayMode": "all",
+        "tooltipDisplayTextTriggeredEmpty": "OK",
+        "tooltipEnabled": true,
+        "tooltipFontSize": 12,
+        "tooltipFontType": "Roboto",
+        "tooltipPrimarySortDirection": 2,
+        "tooltipPrimarySortField": "thresholdLevel",
+        "tooltipSecondarySortDirection": 2,
+        "tooltipSecondarySortField": "value",
+        "tooltipTimestampEnabled": true,
+        "valueEnabled": true
+      },
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "savedComposites": [],
+      "savedOverrides": [],
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "up",
+          "interval": "",
+          "legendFormat": "{{ job }}",
+          "refId": "A"
+        }
+      ],
+      "title": "up",
+      "type": "grafana-polystat-panel",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ]
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 31,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "overview",
+  "uid": "BeEFMkOnz",
+  "version": 13
+}

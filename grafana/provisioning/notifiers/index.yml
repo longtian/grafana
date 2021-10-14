@@ -1,0 +1,18 @@
+apiVersion: 1
+
+notifiers:
+  - name: webhook
+    uid: webhook
+    type: webhook
+    is_default: true
+    disable_resolve_message: false
+    send_reminder: false
+    frequency: ""
+    settings:
+      addresses: ""
+      autoResolve: true
+      httpMethod: "POST"
+      severity: "critical"
+      uploadImage: true
+      username: ""
+      url: "http://webhook:3000"
