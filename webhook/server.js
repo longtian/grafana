@@ -19,7 +19,7 @@ app.listen(PORT, () => {
 
 ['SIGINT', 'SIGTERM'].forEach(sig => {
   process.on(sig, () => {
-    console.log(`signal ${sig}, exit`)
+    console.log(`signal ${sig} received, exit`)
     process.exit()
   })
 })
